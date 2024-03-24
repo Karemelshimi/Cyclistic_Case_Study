@@ -27,13 +27,12 @@
 
 
 ## Scenario
-Cyclistic, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, your team wants to understand how casual riders and annual members use Cyclistic bikes differently y. From these insights the marketing anakyst team at cyclistic that im a part of will design a new marketing strategy to convert casual riders into annual members.
+The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, the team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights the marketing analyst team at cyclistic that im a part of will design a new marketing strategy to convert casual riders into annual members. Moreno believes that maximizing the number of annual members will be key to future growth. Cyclistic’s finance analysts have concluded that annual members are much more profitable than casual riders.
 
 ## About The Company
-In 2016, Cyclistic launched a successful bike-share offering. Since then, the program has grownto a fleet of 5,824 bicycles that are geotracked and locked into a network of 692 stations across Chicago. The bikes can be unlocked from one station and returned to any other station in the system anytime.
+Cyclistic, a bike-share company in Chicago, in 2016, Cyclistic launched a successful bike-share offering. Since then, the program has grown to a fleet of 5,824 bicycles that are geotracked and locked into a network of 692 stations across Chicago. The bikes can be unlocked from one station and returned to any other station in the system anytime.
 
-Cyclistic’s marketing strategy relied on building general awareness and appealing to broad consumer segments. One approach that helped make these things possible was the flexibility of its pricing plans: single-ride passes, full-day passes, and annual memberships. Cyclistic’s finance analysts have concluded that annual members are much more profitable
-than casual riders. Moreno believes that maximizing the number of annual members will be key to future growth.
+Cyclistic’s marketing strategy relied on building general awareness and appealing to broad consumer segments. One approach that helped make these things possible was the flexibility of its pricing plans: single-ride passes, full-day passes, and annual memberships. 
 # Ask
 
 **Business Task**
@@ -46,7 +45,7 @@ Design marketing strategies aimed at converting casual riders into annual member
 - Cyclistic Executive Team <- The notoriously detail-oriented executive team will decide whether to approve the recommended marketing program.
 
 # Prepare 
-Cyclistic’s historical trip data, this is a public data that i used to explore how different customer types are using Cyclistic bikes, the data is located [here](https://divvy-tripdata.s3.amazonaws.com/index.html). It is stored in csv file format and it contains 12 files for the past 12 month starting from February 2024 and going back to March 2023.
+Cyclistic’s historical trip data, this is a public data that i used to analyze how different customer behaviors are using Cyclistic bikes, the data is located [here](https://divvy-tripdata.s3.amazonaws.com/index.html). It is stored in csv file format and it contains 12 files for the past 12 month starting from February 2024 and going back to March 2023.
 
 The data has some limitations :
 
@@ -64,7 +63,7 @@ Im going to check the data using the ROCCC aproach
 # Process
 What tools did i use ? and Why?
 
-I used Excel and SQL and R to check and clean and manipulate the data but the analyzing was done mostly on R and a little bit on SQL. The data contains a lot of information that R and SQL would handel better than Excel so thats why i used them in manipulating and cleaning most of the time.
+I used Excel and R to check, clean and manipulate the data but the analyzing was done on R. The data contains a lot of information that R would handel better than Excel so thats why i used R in manipulating and cleaning most of the time.
 
 ### Documentaion of data cleaning in Excel :
 --------------------------------------------
@@ -158,7 +157,7 @@ combined_bike_data <- combined_bike_data %>%
 
 - **Removing Columns**
 
-Removing data that will not be useful to the analysis so i removed `start_lat`, `start_lng`, `end_lat` and `end_lng`.
+Removing data that are not useful for the analysis, so i removed `start_lat`, `start_lng`, `end_lat` and `end_lng`.
 ```{r}
 combined_bike_data <- combined_bike_data %>%
   select(-c(start_lat, start_lng, end_lat, end_lng))
@@ -167,7 +166,7 @@ combined_bike_data <- combined_bike_data %>%
 
 Some cells need to be removed so i will add NA to them based on some specific conditions.
 
-First `ride_length` it has some values that are equal to `0` and negative number that cannot be displayed  which means that the rider hasn't used the bike for any hours ,minutes or seconds and it is wrong to have the ride length in negative as well so i will not be using these cells in my analysis.
+First `ride_length` it has some values that are equal to `0` and negative number that cannot be displayed which means that the rider hasn't used the bike for any hours ,minutes or seconds or the ride length in negative as well, so i will not be using these cells in my analysis.
 
 Then using `sum(is.na)` to know how many ride_length where equal to 0 and negative numbers, as you can see we had {1560} entry.
 ```{r}
@@ -204,7 +203,7 @@ Using `na.omit()` to delete the `N/A` values in the data frame.
 ```{r}
 combined_bike_data <- na.omit(combined_bike_data)
 ```
-There were {1,375,436} observations deleted and now the available observations that i will use for analysis is {4,331,652} observation,
+There were {1,375,436} observations deleted and now the available observations that i will use for analysis are {4,331,652} observation,
 mostly the deleted N/A's were from the `start_station_name`, `end_station_name`, `start_station_id`, `end_station_id` and some rows in the `ride_length`.
  
 # Analyze
@@ -232,7 +231,7 @@ the outcome is that {298,193} rides were electric bikes and {494,360} rides were
 
 Second condition is using the same rideable types when the ride length is shorter than 60 minutes.
 the outcome is that {1,234,413} rides were by electric bikes and {2,232,262} were by classic bikes.
-Conclusion is that the classic bikes are being used more when the ride length is less or more than 60 minutes.
+Conclusion is that the classic bikes are being used more when the ride length is less or more than 60 minutes, but more riders ride the bike for a preiod shorter than 60 minutes.
 ```{r}
 sum(combined_bike_data$rideable_type == "electric_bike" & combined_bike_data$ride_length > "60")
 sum(combined_bike_data$rideable_type == "classic_bike" & combined_bike_data$ride_length > "60")
@@ -248,8 +247,8 @@ sum(combined_bike_data$rideable_type == "classic_bike")
 #### Member and Casual Riders Count
 ------------------------------------
 
-- Using sum to know how many members do we have and how many casual riders do we have throughout the past 12 month.
-we have {2,806,688} members and {1,524,848} are casual riders.
+- Using sum to know how many members and casual riders cyclistics had throughout the past 12 month.
+they had {2,806,688} members and {1,524,848} casual riders.
 
 ```{r}
 sum(combined_bike_data$member_casual == "member")
@@ -332,8 +331,11 @@ combined_bike_data %>%
   theme_minimal()
 ```
 ![Classic Bike Vs Electric Bike](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/ce1cdb83-1c50-436a-9329-72b67d3dbc00)
-### AVG Ride Length
-Comparing members vs casual riders based ob=n their ride length to see what are their riding habits. 
+### Ride Length
+
+- #### AVG Ride Length
+
+Comparing members vs casual riders based on their ride length to see what are their riding habits. 
 
 This visualization shows that the casual riders tend to spend more time riding as their avg rides exceed 22.5 minutes, members spend much less time as their avg rides length is shorter than 12.5 minutes.
 
@@ -348,4 +350,22 @@ combined_bike_data %>%
   theme_minimal()
 ```
 ![AVG Ride Length](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/b181c881-bd45-44eb-8a95-15fa84ebb845)
+#### AVG Ride Length by Weekday
+
+Comparing the avg `ride_length` by weekdays and `rideable_type`.
+for casual riders the longest they ride are on Sundays with more than an average of 22.5 minutes and members as well are on sundays but with an average of almost 12.5 minutes.
+the shortest they ride are on wedensdays and thursdays for casual riders with and average less than 20 minutes and for members more than an average of 10 minutes.
+```{r}
+combined_bike_data %>%
+  group_by(day_of_week, member_casual) %>%
+  summarise(avg_ride_length = mean(ride_length, na.rm = TRUE)) %>%
+  ggplot(aes(x = day_of_week, y = avg_ride_length, fill = member_casual)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = member_casual_color,c("Member_Casual"))+
+  labs(x = "Day Of Week", y = "Average Ride Length", title = "Average Ride Length by Weekday and Rider Type")+
+  theme_minimal()
+```
+![AVG Ride Length by Weekday](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/14e857a4-f6a3-46e0-a023-e740f6531f7d)
+
+
 
