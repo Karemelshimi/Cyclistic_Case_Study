@@ -210,11 +210,9 @@ mostly the deleted N/A's were from the `start_station_name`, `end_station_name`,
 
 #### Ride Length
 ---------------
-
 - Calculating the mean, min, and max for the ride length
 
 mean is {15.9} minutes , min is {0.016} and max is {1439.8} minutes.
-
 ```{r}
 mean(combined_bike_data$ride_length) 
 min(combined_bike_data$ride_length)
@@ -238,8 +236,7 @@ sum(combined_bike_data$rideable_type == "classic_bike" & combined_bike_data$ride
 sum(combined_bike_data$rideable_type == "electric_bike" & combined_bike_data$ride_length < "60")
 sum(combined_bike_data$rideable_type == "classic_bike" & combined_bike_data$ride_length < "60")
 ```
-- By using sum you can see that the total electric bike used from the total rides, {1,532,620} rides were by electric bikes and {2,726,663} rides were by classic bike so the classic bikes are being used more.
-- 
+- By using sum you can see that the total electric bike used from the total rides, {1,532,620} rides were by electric bikes and {2,726,663} rides were by classic bike so the classic bikes are being used more. 
 ```{r}
 sum(combined_bike_data$rideable_type == "electric_bike")
 sum(combined_bike_data$rideable_type == "classic_bike")
@@ -249,7 +246,6 @@ sum(combined_bike_data$rideable_type == "classic_bike")
 
 - Using sum to know how many members and casual riders cyclistics had throughout the past 12 month.
 they had {2,806,688} members and {1,524,848} casual riders.
-
 ```{r}
 sum(combined_bike_data$member_casual == "member")
 sum(combined_bike_data$member_casual == "casual")
@@ -264,7 +260,6 @@ First, member use more electric bike than the casual riders as {961, 489} rides 
 Second, members also use more classic bikes than casual riders as {1,845,199} rides were by members and {881,464} rides were by casual riders.
 
 Casual riders and members tend to use classic bikes more than electric bikes.
-
 ```{r}
 sum(combined_bike_data$rideable_type == "electric_bike" & combined_bike_data$member_casual == "member")
 sum(combined_bike_data$rideable_type == "electric_bike" & combined_bike_data$member_casual == "casual")
@@ -272,12 +267,7 @@ sum(combined_bike_data$rideable_type == "classic_bike" & combined_bike_data$memb
 sum(combined_bike_data$rideable_type == "classic_bike" & combined_bike_data$member_casual == "casual")
 ```
 # Share
-
-### Comparing Members Vs Casual Riders
-
-- #### Day of Week
-
-
+### Riders by Day of Week
 Using the `combined_bike_data` data frame we can see that members ride bikes the most on Thursdays and casual riders ride bikes more on Saturdays, this shows that there is a difference in the riding behavior between members and casual riders
 ```{r}
 member_casual_color <- c (
@@ -289,17 +279,16 @@ combined_bike_data %>%
   summarise(count = n()) %>%
   ggplot(aes(x = day_of_week, y = count, fill = member_casual)) +
   geom_col(position = "dodge") +
+  geom_text(aes(label = round(count, 2)), position = position_dodge(width = 1.1), vjust = -0.5, size = 3) +
   scale_fill_manual(values = member_casual_color, c("Member_Casual"))+
   labs(x = "Day Of Week", y = "Member-Casual Count", title = "Member vs Casual Riders By Week Days")+
   theme_minimal()
 ```
-![Day Of Week](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/943cc5ad-de11-4921-8671-7913a472c084)
-
-- #### Month
-
+![Day Of Week](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/53e49e1a-02ed-4f57-8d46-c408a24c111a)
+### Riders by Month
 Using the same inputs from the last visualization but changing the `group_by` to group it by `month`.
 
-The visualization shows tha for `members` August has the highest member riders for the past 12 month and `Casual` riders are riding bikes the most in July, overall June, July, and august are the highest 3 month of the past 12 that have the highest riders members and casual riders. 
+The visualization shows tha for `members` August has the highest member riders for the past 12 month and `Casual` riders are riding bikes the most in July, overall June, July, August, and September are the highest 4 month of the past 12 that have the highest riders members and casual riders. 
 
 The lowest month with riders are December, January, February, and March, they have the lowest riders for the past 12 month, this means that riders either members or casual riders usually ride the most in summer and ride fewer in the winter.
 ```{r}
@@ -308,17 +297,16 @@ combined_bike_data %>%
   summarise(count = n()) %>%
   ggplot(aes(x = month, y = count, fill = member_casual)) +
   geom_col(position = "dodge") +
+  geom_text(aes(label = round(count, 2)), position = position_dodge(width = 0.7 ), vjust =    -0.5 ,size = 3, color = "darkgrey") +
   scale_fill_manual(values = member_casual_color,c("Member_Casual"))+
-  labs(x = "Month", y = "Member-Casual Count", title = "Member Vs Casual Riders By Month")+
+  labs(x = "Month", y = "Member-Casual Count", title = "Member Vs Casual Rides By Month")+
   theme_minimal()
 ```
-![Month](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/5d679bad-bd0e-4234-8071-5f90d7756d0c)
-### Comparing Classic Bike vs Electric Bike
-
+![Month](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/b85cb08c-2418-45e0-a4c3-93234fc6677c)
+### Classic Bike vs Electric Bike
 This visualization shows comparison between classic bikes and electric bikes based on usage by casual riders and members.
 
 Classic bikes are being used more by both members and casual riders but the overall usage of bike is more by members.
-
 ```{r}
 combined_bike_data %>%
   filter(rideable_type %in% c("classic_bike", "electric_bike")) %>%
@@ -326,46 +314,80 @@ combined_bike_data %>%
   summarise(count = n()) %>%
   ggplot(aes(x = rideable_type, y = count, fill = member_casual))+
   geom_col(position = "dodge") +
+  geom_text(aes(label = round(count, 2)), position = position_dodge(width = 0.7 ), vjust = -0.5 ,size = 3) +
   scale_fill_manual(values = member_casual_color, c("Member_Casual")) + 
   labs(x = "Rideable Type", y = "Member-Casual Count", title = "Classic Bike Vs Electric Bike") +
   theme_minimal()
 ```
-![Classic Bike Vs Electric Bike](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/ce1cdb83-1c50-436a-9329-72b67d3dbc00)
-### Ride Length
+![Classic Bike Vs Electric Bike](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/c04ab29d-bad4-4a98-a2af-d6802c0c6d84)
+### AVG Ride Length
 
-- #### AVG Ride Length
+comparing members vs casual riders based ob=n their ride length to see what are their riding habits. 
 
-Comparing members vs casual riders based on their ride length to see what are their riding habits. 
-
-This visualization shows that the casual riders tend to spend more time riding as their avg rides exceed 22.5 minutes, members spend much less time as their avg rides length is shorter than 12.5 minutes.
-
+This visualization shows that the casual riders tend to spend more time riding as their avg rides exceed 22.92 minutes, members spend much less time as their avg rides length is shorter than 12.23 minutes.
 ```{r}
 combined_bike_data %>%
   group_by(member_casual) %>%
   summarise(avg_ride_length = mean(ride_length, na.rm = TRUE)) %>%
   ggplot(aes(x = member_casual, y = avg_ride_length, fill = member_casual)) +
   geom_col(position = "dodge") +
+  geom_text(aes(label = round(avg_ride_length, 2)), position = position_dodge(width = 0.9), vjust = -0.5, size = 3) +
   scale_fill_manual(values = member_casual_color, c("Member_Casual"))+
   labs(x = "Member_Casual", y = "Ride Length", title = "Member vs Casual Riders By Ride Length")+
   theme_minimal()
 ```
-![AVG Ride Length](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/b181c881-bd45-44eb-8a95-15fa84ebb845)
+![AVG Ride Length](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/8c9fbcd4-1d89-4297-8c01-762a44594c0b)
+
 #### AVG Ride Length by Weekday
 
 Comparing the avg `ride_length` by weekdays and `rideable_type`.
-for casual riders the longest they ride are on Sundays with more than an average of 22.5 minutes and members as well are on sundays but with an average of almost 12.5 minutes.
-the shortest they ride are on wedensdays and thursdays for casual riders with and average less than 20 minutes and for members more than an average of 10 minutes.
+for casual riders the longest they ride are on Sundays with more than an average of 26.8 minutes and members as well are on Sundays but with an average of almost 13.71 minutes.
+the shortest they ride are on Wednesdays for casual riders with and average of 19.62 minutes and Mondays and Thursdays for members with an average of 11.68 minutes.
 ```{r}
 combined_bike_data %>%
   group_by(day_of_week, member_casual) %>%
   summarise(avg_ride_length = mean(ride_length, na.rm = TRUE)) %>%
   ggplot(aes(x = day_of_week, y = avg_ride_length, fill = member_casual)) +
   geom_col(position = "dodge") +
+  geom_text(aes(label = round(avg_ride_length, 2)), position = position_dodge(width = 0.9), vjust = -0.5, size = 3) +
   scale_fill_manual(values = member_casual_color,c("Member_Casual"))+
-  labs(x = "Day Of Week", y = "Average Ride Length", title = "Average Ride Length by Weekday and Rider Type")+
+  labs(x = "Day Of Week", y = "Average Ride Length", title = "Average Ride Length by Weekday and Member_Casual")+
   theme_minimal()
 ```
-![AVG Ride Length by Weekday](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/14e857a4-f6a3-46e0-a023-e740f6531f7d)
+![AVG Ride Length by Weekday](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/eb437ff0-3913-47d8-bde2-99ced3f95677)
+#### AVG Ride Length and Rideable Type
+Comparing the avg ride length based on the rideable type.
+The visualization shows that the classic bike has an average length of 17.17 minutes and the electric bike has and average of 12.14 minutes, which means that the classic bike is used more for long trips and the electric bikes are for shorter rides.
+```{r}
+classic_electric <- c (
+  "classic_bike" = "brown",
+  "electric_bike" = "black"
+)
+combined_bike_data %>%
+  filter(rideable_type %in% c("classic_bike", "electric_bike")) %>%
+  group_by(rideable_type) %>%
+  summarise(avg_ride_length = mean(ride_length, na.rm = TRUE)) %>%
+  ggplot(aes(x = rideable_type, y = avg_ride_length, fill = rideable_type)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = round(avg_ride_length, 2)), position = position_dodge(width = 0.9), vjust = -0.5, size = 3) +
+  scale_fill_manual(values = classic_electric)+
+  labs(x = "Rideable Type", y = "Average Ride Length", title = "Average Ride Length by Rideable Type")+
+  theme_minimal()
+```
+![AVG Ride Length by Rideable-Type](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/06c654a4-add0-407e-b42b-b024de1851c9)
 
-
-
+# Act
+### Statistical Summary
+- Classic bikes are used more when the ride length is longer or shorter than 60 minutes as it is more reliable than electric bikes either for casual riders or member.
+- 6.8% of riders ride for more than one hour use electric bikes and 11.4% use classic bikes.
+- 28.4% of riders that ride for less than one hour use electric bikes and 51.5% use classic bikes.
+- 64.7% of riders are members and 35.3% are casual riders.
+- Overall 35.3% of rides were on electric bikes and 62.9% were on classic bikes and the rest were docked bikes.
+- 22.19% of rides by members were on electric bikes and 42.5% were on classic bikes, 13.18% of rides by casual riders were on electric bikes and 20.3% were on classic bikes and 1.67% were docked bikes.
+- Classic bikes are used more than electric bike by casual riders and members.
+- Members increase riding bikes on Thursdays abd casual riders increase riding on Saturdays.
+- June, July, August, and September have the highest number of riders with more than 300,000 of riders going up to 350,000 riders , December, Jan, and Febreuary have the lowest number of ridres which means that in summer there are more ridres than winter.
+- The average ride length for member is 12.23 minutes and for casual riders is 22.92 minutes.
+- Casual riders, the longest they ride are on Sundays with an average of 26.8 minutes and for members is as well on Sundays but with an average of 13.71 minutes.
+- The shorters thery ride are on Wednesday for casual riders with and average of 19.62 minutes, Mondays and Thursdays for members with and average of 11.68 minutes.
+- Average ride length done using classic bike is 17.17 minutes and using electric bikes is 12.14 minutes.
