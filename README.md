@@ -385,9 +385,14 @@ combined_bike_data %>%
 - Overall 35.3% of rides were on electric bikes and 62.9% were on classic bikes and the rest were docked bikes.
 - 22.19% of rides by members were on electric bikes and 42.5% were on classic bikes, 13.18% of rides by casual riders were on electric bikes and 20.3% were on classic bikes and 1.67% were docked bikes.
 - Classic bikes are used more than electric bike by casual riders and members.
-- Members increase riding bikes on Thursdays abd casual riders increase riding on Saturdays.
+- Members increase riding bikes on Thursdays and casual riders increase riding on Saturdays.
 - June, July, August, and September have the highest number of riders with more than 300,000 of riders going up to 350,000 riders , December, Jan, and Febreuary have the lowest number of ridres which means that in summer there are more ridres than winter.
 - The average ride length for member is 12.23 minutes and for casual riders is 22.92 minutes.
 - Casual riders, the longest they ride are on Sundays with an average of 26.8 minutes and for members is as well on Sundays but with an average of 13.71 minutes.
-- The shorters thery ride are on Wednesday for casual riders with and average of 19.62 minutes, Mondays and Thursdays for members with and average of 11.68 minutes.
+- The shortest thery ride are on Wednesday for casual riders with and average of 19.62 minutes, Mondays and Thursdays for members with an average of 11.68 minutes.
 - Average ride length done using classic bike is 17.17 minutes and using electric bikes is 12.14 minutes.
+### Recommendations 
+- Target casual riders in the summer because they use to ride the most in summer so try and make for them specific discount or targeted ads in these 4 months.
+- Casual riders ride more on Saturdays, send them notification or ads on weekends to aware them about the membership subscription.
+- Casual riders ride for longer time on sundays so we can give them free rides on some specific weekend so to build customer connection with the casual riders.
+- Give casual riders mini subscription to let them try how it feels to own a longer membership rather than the daily pay.
