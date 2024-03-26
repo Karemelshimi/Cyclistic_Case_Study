@@ -19,7 +19,7 @@
 
 <a href="#share" id="toc-share">Share</a>
 
-<a href="#act" id="act">Act</a>
+<a href="#act" id="toc-act">Act</a>
 
 
 
