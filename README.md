@@ -375,6 +375,11 @@ combined_bike_data %>%
 ```
 ![AVG Ride Length by Rideable-Type](https://github.com/Karemelshimi/Cyclistic_Case_Study/assets/153403784/06c654a4-add0-407e-b42b-b024de1851c9)
 
+## Dashboard
+[Tableau Cyclistic Dashboard](https://public.tableau.com/app/profile/karem.mohamed/viz/CyclisticAnalysisDashboard_17116145222430/Cyclistic_Case_Study)
+
+![Cyclistic_Case_Study](https://github.com/Karemelshimi/Cyclistic_Case_Study_for_Data_Analysis/assets/153403784/acf1b730-274a-4352-a796-e39ecc2da4b6)
+
 # Act
 ### Statistical Summary
 - Classic bikes are used more when the ride length is longer or shorter than 60 minutes as it is more reliable than electric bikes either for casual riders or member.
